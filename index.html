@@ -1,0 +1,154 @@
+-<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SUDOKU — DAA Project</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="wrapper">
+
+    <!-- ══════════════ HEADER ══════════════ -->
+    <header>
+      <div class="title-tag">— Design &amp; Analysis of Algorithms —</div>
+      <h1>SUDOKU</h1>
+      <div class="subtitle">Backtracking · Constraint Propagation · Arc Consistency</div>
+      <div class="algo-info">
+        <span class="badge badge-algo">⚡ Backtracking Algorithm</span>
+        <span class="badge badge-time">O(9^n²) Time</span>
+        <span class="badge badge-space">O(n²) Space</span>
+      </div>
+    </header>
+
+    <!-- ══════════════ GAME LAYOUT ══════════════ -->
+    <div class="game-layout">
+
+      <!-- LEFT PANEL -->
+      <div class="left-side">
+
+        <!-- Stats Panel -->
+        <div class="panel">
+          <div class="panel-title">⏱ Game Stats</div>
+          <div class="stats">
+            <div>
+              <div class="stat-label">ELAPSED TIME</div>
+              <span id="timer">00:00</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">MISTAKES</span>
+              <span class="stat-value accent" id="mistakes">0 / 3</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">HINTS USED</span>
+              <span class="stat-value green" id="hint-count">0</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">CELLS LEFT</span>
+              <span class="stat-value" id="cells-left">—</span>
+            </div>
+            <div>
+              <div class="stat-label" style="margin-bottom:6px;">PROGRESS</div>
+              <div class="progress-bar">
+                <div class="progress-fill" id="progress"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Difficulty + Controls Panel -->
+        <div class="panel" style="margin-top:14px;">
+          <div class="panel-title">🎮 Difficulty</div>
+          <div class="diff-grid">
+            <button class="diff-btn" data-level="easy">Easy</button>
+            <button class="diff-btn active" data-level="medium">Medium</button>
+            <button class="diff-btn" data-level="hard">Hard</button>
+            <button class="diff-btn" data-level="expert">Expert</button>
+          </div>
+          <button class="btn btn-primary" id="new-game-btn">▶ New Game</button>
+          <button class="btn btn-ghost"   id="solve-btn">⚡ Auto Solve</button>
+          <button class="btn btn-ghost"   id="hint-btn">💡 Hint (3 left)</button>
+          <button class="btn btn-danger"  id="reset-btn">↺ Reset Board</button>
+        </div>
+
+      </div><!-- /left-side -->
+
+      <!-- CENTER: Board + Controls + Numpad -->
+      <div class="board-wrap">
+
+        <div id="board"></div>
+
+        <div class="controls-row">
+          <button class="ctrl-btn" id="undo-btn">↩ Undo</button>
+          <button class="ctrl-btn" id="erase-btn">⌫ Erase</button>
+          <button class="ctrl-btn" id="notes-btn">✏ Notes</button>
+          <button class="ctrl-btn" id="check-btn">✔ Check</button>
+        </div>
+
+        <div id="numpad"></div>
+
+      </div><!-- /board-wrap -->
+
+      <!-- RIGHT PANEL -->
+      <div class="right-side">
+
+        <!-- Move Log -->
+        <div class="panel">
+          <div class="panel-title">📋 Move Log</div>
+          <div class="hint-log" id="log">
+            <div class="log-entry hint">— Game started —</div>
+          </div>
+        </div>
+
+        <!-- Algorithm Info -->
+        <div class="panel" style="margin-top:14px;">
+          <div class="panel-title">🧠 Algorithm</div>
+          <div class="algo-vis">
+            <div class="algo-vis-title">Backtracking Solver</div>
+            <div class="algo-step" id="algo-step">
+              Select a cell to see constraint info…
+            </div>
+          </div>
+          <div style="margin-top:14px;">
+            <div class="panel-title" style="margin-bottom:8px;">How It Works</div>
+            <div class="algo-desc">
+              <b class="c-accent">Backtracking</b> tries digits 1–9 recursively,
+              undoing invalid placements.<br><br>
+              <b class="c-green">Constraint Propagation</b> eliminates impossible
+              values using row, column &amp; box rules.<br><br>
+              <b class="c-pink">Arc Consistency (AC-3)</b> enforces consistency
+              across all cell pairs.
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /right-side -->
+
+    </div><!-- /game-layout -->
+  </div><!-- /wrapper -->
+
+  <!-- ══════════════ WIN OVERLAY ══════════════ -->
+  <div id="win-overlay">
+    <div class="win-card">
+      <div class="win-emoji">🏆</div>
+      <div class="win-title">SOLVED!</div>
+      <p class="win-sub">Puzzle Complete</p>
+      <div class="win-stats">
+        <div class="win-stat">
+          <div class="win-stat-val" id="win-time">—</div>
+          <div class="win-stat-label">Time</div>
+        </div>
+        <div class="win-stat">
+          <div class="win-stat-val" id="win-mistakes">—</div>
+          <div class="win-stat-label">Mistakes</div>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="newGame()" style="width:100%;margin-top:0;">▶ Play Again</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
